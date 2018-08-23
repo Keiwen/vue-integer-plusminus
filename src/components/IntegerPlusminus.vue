@@ -62,15 +62,17 @@
         }
         return btnClass
       },
-      increment: function () {
+      increment () {
         if (this.canIncrement) {
           this.intValue = this.intValue + this.step
+          this.$emit('ipm-increment', this.intValue)
           this.$emit('input', this.intValue)
         }
       },
-      decrement: function () {
+      decrement () {
         if (this.canDecrement) {
           this.intValue = this.intValue - this.step
+          this.$emit('ipm-decrement', this.intValue)
           this.$emit('input', this.intValue)
         }
       }
@@ -82,7 +84,7 @@
         }
       }
     },
-    created: function () {
+    created () {
       this.intValue = this.value
       if (this.step < 1) this.step = 1
       if (this.max < this.min) this.max = undefined

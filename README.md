@@ -68,6 +68,11 @@ Style could be overwritten using `!important` css keyword
 }
 ```
 
+Events:
+- 'input' on value change
+- 'ipm-increment' on value increment
+- 'ipm-decrement' on value decrement
+
 ## Contribution
 - Fork the repository
 - Run `npm install`
