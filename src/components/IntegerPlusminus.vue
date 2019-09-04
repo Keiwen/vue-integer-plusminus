@@ -1,14 +1,14 @@
 <template>
     <div class="int-pm" :class="{'int-pm-vertical': vertical}">
-        <div class="int-pm-btn" :class="getBtnClass(true)" v-on:click="vertical ? increment() : decrement()">
+        <button class="int-pm-btn" :class="getBtnClass(true)" v-on:click="vertical ? increment() : decrement()" :aria-label="decrementAriaLabel">
             <slot :name="vertical ? 'increment' : 'decrement'">{{ vertical ? '+' : '-' }}</slot>
-        </div>
-        <div class="int-pm-value">
+        </button>
+        <div class="int-pm-value" ref="spinbutton" role="spinbutton" tabindex="0" :aria-valuenow="value" :aria-valuemin="min" :aria-valuemax="max" :aria-label="spinButtonAriaLabel">
             <slot>{{ intValue }}</slot>
         </div>
-        <div class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()">
+        <button class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()" :aria-label="incrementAriaLabel">
             <slot :name="vertical ? 'decrement' : 'increment'">{{ vertical ? '-' : '+' }}</slot>
-        </div>
+        </button>
     </div>
 </template>
 
@@ -35,6 +35,18 @@
       vertical: {
         default: false,
         type: Boolean
+      },
+      incrementAriaLabel: {
+        default: null,
+        type: String
+      },
+      decrementAriaLabel: {
+        default: null,
+        type: String
+      },
+      spinButtonAriaLabel: {
+        default: null,
+        type: String
       }
     },
     data () {
@@ -50,7 +62,43 @@
         return ((this.intValue - this.step) >= this.min)
       },
     },
+    mounted () {
+      window.addEventListener('keydown', this.keyUp)
+    },
     methods: {
+      keyUp (event) {
+        if (this.isSpinButtonFocused()) {
+          if (event.keyCode === 33 || event.keyCode === 38) { // page up || up arrow
+            this.increment()
+            event.preventDefault()
+          }
+
+          if (event.keyCode === 34 || event.keyCode === 40) { // page down || down arrow
+            this.decrement()
+            event.preventDefault()
+          }
+
+          if (event.keyCode === 36) { // home button
+            this.setToMin()
+            event.preventDefault()
+          }
+
+          // if max, set to max
+          if (this.max !== undefined && event.keyCode === 35) { // end button
+            this.setToMax()
+            event.preventDefault()
+          }
+        }
+      },
+      isSpinButtonFocused() {
+        let activeElement = document.activeElement;
+
+        if (activeElement === this.$refs.spinbutton) {
+          return true
+        } else {
+          return false
+        }
+      },
       getBtnClass (firstBtn) {
         let btnClass = 'int-pm-'
         if ((firstBtn && !this.vertical) || (!firstBtn && this.vertical)) {
@@ -61,6 +109,14 @@
           if (!this.canIncrement) btnClass += ' disabled'
         }
         return btnClass
+      },
+      setToMin () {
+        this.intValue = this.min
+        this.$emit('input', this.intValue)
+      },
+      setToMax() {
+        this.intValue = this.max
+        this.$emit('input', this.intValue)
       },
       increment () {
         if (this.canIncrement) {
@@ -98,7 +154,7 @@
         text-align: center;
         position: relative;
 
-        div {
+        button {
             display: table-cell;
             vertical-align: middle;
         }
