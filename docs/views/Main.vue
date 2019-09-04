@@ -124,6 +124,8 @@
 
     .int-pm {
         &.demo-vertical {
+            max-width: 90px;
+
             font-size: 1.5em;
             .int-pm-value {
                 background-color: black;
@@ -131,6 +133,8 @@
                 font-size: 2em;
                 padding: 0 30px !important;
                 border: 1px solid black !important;
+                line-height: 1;
+                padding: 10px;
             }
             .int-pm-btn {
                 border: none !important;
