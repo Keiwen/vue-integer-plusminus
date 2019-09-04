@@ -150,14 +150,8 @@
 
 <style lang="scss" scoped>
     .int-pm {
-        display: table;
+        display: flex;
         text-align: center;
-        position: relative;
-
-        button {
-            display: table-cell;
-            vertical-align: middle;
-        }
 
         .int-pm-value {
             border-width: 1px 0;
@@ -187,10 +181,8 @@
         }
 
         &.int-pm-vertical {
-            display: inline-block;
-            div {
-                display: block;
-            }
+            flex-direction: column;
+
             .int-pm-value {
                 border-width: 0 1px;
                 padding: 5px 10px;
