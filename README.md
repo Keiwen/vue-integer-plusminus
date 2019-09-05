@@ -6,6 +6,8 @@ Integer input with increment and decrement buttons
 
 [Live demo here](https://keiwen.github.io/vue-integer-plusminus/)
 
+This component fits as spinbutton, allowing keyboard functionalities (`up`/`down` arrows or `page up/down` to increment/decrement, `home`/`end` to min/max)
+
 ## Global use
 - npm install
 ```
@@ -51,6 +53,9 @@ export default {
 | `max` | `number` | maximum possible value. Cannot increment over. Default is undefined |
 | `step` | `number` | Incremental step. Must be greater than 0. Default is 1 |
 | `vertical` | `Boolean` | Use vertical layout. Default is false |
+| `spinButtonAriaLabel` | `string` | Set aria-label attribute on value element, optional |
+| `incrementAriaLabel` | `string` | Set aria-label attribute on decrement button element, optional |
+| `decrementAriaLabel` | `string` | Set aria-label attribute on increment button element, optional |
 
 This component provide 3 slots
 - Default slot is the middle part when value is usually displayed

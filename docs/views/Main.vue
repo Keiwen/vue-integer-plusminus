@@ -13,7 +13,7 @@
                            :vertical="ipm_vertical"
                            :increment-aria-label="'increase by 1'"
                            :decrement-aria-label="'decrease by 1'"
-                           :spinButtonAriaLabel="'first example'"
+                           :spin-button-aria-label="'first example'"
                            v-model="ipm_value">
                     <p v-if="ipm_slot_header">{{ ipm_slot_header }}</p>
                     {{ ipm_value }}
@@ -63,16 +63,16 @@
             <div class="gallery">
               <h2>Gallery</h2>
 
-                <integer-plusminus :min="1" :max="3" :value="2" :increment-aria-label="'increase by 1'" :decrement-aria-label="'decrease by 1'" :spinButtonAriaLabel="'example two'"></integer-plusminus>
+                <integer-plusminus :min="1" :max="3" :value="2" :increment-aria-label="'increase by 1'" :decrement-aria-label="'decrease by 1'" :spin-button-aria-label="'example two'"></integer-plusminus>
                 <br/>
-                <integer-plusminus :min="0" :max="100" :step="10" :increment-aria-label="'increase score by 10'" :decrement-aria-label="'decrease score by 10'" :spinButtonAriaLabel="'game points'" v-model="demo_slot_value">
+                <integer-plusminus :min="0" :max="100" :step="10" :increment-aria-label="'increase score by 10'" :decrement-aria-label="'decrease score by 10'" :spin-button-aria-label="'game points'" v-model="demo_slot_value">
                     <p>You have {{ demo_slot_value }} points</p>
                     <i>Games worth 10 points</i>
                     <template slot="increment">Win</template>
                     <template slot="decrement">Loss</template>
                 </integer-plusminus>
                 <br/>
-                <integer-plusminus class="demo-vertical" :min="0" :max="9" :vertical="true" :value="5" :increment-aria-label="'increase by 1'" :decrement-aria-label="'decrease by 1'" :spinButtonAriaLabel="'example 3'"></integer-plusminus>
+                <integer-plusminus class="demo-vertical" :min="0" :max="9" :vertical="true" :value="5" :increment-aria-label="'increase by 1'" :decrement-aria-label="'decrease by 1'" :spin-button-aria-label="'example 3'"></integer-plusminus>
 
 
             </div>
@@ -134,10 +134,9 @@
                 background-color: black;
                 color: white;
                 font-size: 2em;
-                padding: 0 30px !important;
+                padding: 5px 30px !important;
                 border: 1px solid black !important;
                 line-height: 1;
-                padding: 10px;
             }
             .int-pm-btn {
                 border: none !important;

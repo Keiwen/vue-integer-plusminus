@@ -1,12 +1,15 @@
 <template>
     <div class="int-pm" :class="{'int-pm-vertical': vertical}">
-        <button class="int-pm-btn" :class="getBtnClass(true)" v-on:click="vertical ? increment() : decrement()" :aria-label="decrementAriaLabel">
+        <button class="int-pm-btn" :class="getBtnClass(true)" v-on:click="vertical ? increment() : decrement()"
+                :aria-label="decrementAriaLabel">
             <slot :name="vertical ? 'increment' : 'decrement'">{{ vertical ? '+' : '-' }}</slot>
         </button>
-        <div class="int-pm-value" ref="spinbutton" role="spinbutton" tabindex="0" :aria-valuenow="value" :aria-valuemin="min" :aria-valuemax="max" :aria-label="spinButtonAriaLabel">
+        <div class="int-pm-value" ref="spinbutton" role="spinbutton" tabindex="0"
+             :aria-valuenow="value" :aria-valuemin="min" :aria-valuemax="max" :aria-label="spinButtonAriaLabel">
             <slot>{{ intValue }}</slot>
         </div>
-        <button class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()" :aria-label="incrementAriaLabel">
+        <button class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()"
+                :aria-label="incrementAriaLabel">
             <slot :name="vertical ? 'decrement' : 'increment'">{{ vertical ? '-' : '+' }}</slot>
         </button>
     </div>
@@ -91,13 +94,7 @@
         }
       },
       isSpinButtonFocused() {
-        let activeElement = document.activeElement;
-
-        if (activeElement === this.$refs.spinbutton) {
-          return true
-        } else {
-          return false
-        }
+        return document.activeElement === this.$refs.spinbutton
       },
       getBtnClass (firstBtn) {
         let btnClass = 'int-pm-'
