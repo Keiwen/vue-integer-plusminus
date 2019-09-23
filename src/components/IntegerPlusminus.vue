@@ -1,7 +1,7 @@
 <template>
     <div class="int-pm" :class="{'int-pm-vertical': vertical}">
         <button class="int-pm-btn" :class="getBtnClass(true)" v-on:click="vertical ? increment() : decrement()"
-                :aria-label="decrementAriaLabel">
+                :aria-label="decrementAriaLabel" :disabled="disabled">
             <slot :name="vertical ? 'increment' : 'decrement'">{{ vertical ? '+' : '-' }}</slot>
         </button>
         <div class="int-pm-value" ref="spinbutton" role="spinbutton" tabindex="0"
@@ -9,7 +9,7 @@
             <slot>{{ intValue }}</slot>
         </div>
         <button class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()"
-                :aria-label="incrementAriaLabel">
+                :aria-label="incrementAriaLabel" :disabled="disabled">
             <slot :name="vertical ? 'decrement' : 'increment'">{{ vertical ? '-' : '+' }}</slot>
         </button>
     </div>
@@ -50,6 +50,10 @@
       spinButtonAriaLabel: {
         default: null,
         type: String
+      },
+      disabled: {
+        default: false,
+        type: Boolean
       }
     },
     data () {
@@ -59,9 +63,11 @@
     },
     computed: {
       canIncrement () {
+        if (this.disabled) return false
         return (this.max === undefined || ((this.intValue + this.step) <= this.max))
       },
       canDecrement () {
+        if (this.disabled) return false
         return ((this.intValue - this.step) >= this.min)
       },
     },
@@ -108,10 +114,12 @@
         return btnClass
       },
       setToMin () {
+        if (this.disabled) return
         this.intValue = this.min
         this.$emit('input', this.intValue)
       },
       setToMax() {
+        if (this.disabled) return
         this.intValue = this.max
         this.$emit('input', this.intValue)
       },

@@ -11,6 +11,7 @@
                            :max="parseInt(ipm_max)"
                            :step="parseInt(ipm_step)"
                            :vertical="ipm_vertical"
+                           :disabled="ipm_disabled"
                            :increment-aria-label="'increase by 1'"
                            :decrement-aria-label="'decrease by 1'"
                            :spin-button-aria-label="'first example'"
@@ -32,6 +33,9 @@
 
                 <label for="ipm_vertical">Vertical:</label>
                 <input type="checkbox" v-model="ipm_vertical" id="ipm_vertical"/>
+
+                <label for="ipm_disabled">Disabled:</label>
+                <input type="checkbox" v-model="ipm_disabled" id="ipm_disabled"/>
 
                 <br/><br/>
 
@@ -98,6 +102,7 @@
         ipm_slot_decr: '-1',
         ipm_slot_incr: '+1',
         ipm_vertical: false,
+        ipm_disabled: false,
         demo_slot_value: 50
       }
     }

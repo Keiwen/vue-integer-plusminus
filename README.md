@@ -36,6 +36,7 @@ export default {
                    :max="ipm_max"
                    :step="ipm_step"
                    :vertical="ipm_vertical"
+                   :disabled="imp_disabled"
                    v-model="ipm_value">
     <p>Your value is</p>
     {{ ipm_value }}
@@ -53,6 +54,7 @@ export default {
 | `max` | `number` | maximum possible value. Cannot increment over. Default is undefined |
 | `step` | `number` | Incremental step. Must be greater than 0. Default is 1 |
 | `vertical` | `Boolean` | Use vertical layout. Default is false |
+| `disabled` | `Boolean` | Disabled buttons and keys events. Default is false |
 | `spinButtonAriaLabel` | `string` | Set aria-label attribute on value element, optional |
 | `incrementAriaLabel` | `string` | Set aria-label attribute on decrement button element, optional |
 | `decrementAriaLabel` | `string` | Set aria-label attribute on increment button element, optional |
