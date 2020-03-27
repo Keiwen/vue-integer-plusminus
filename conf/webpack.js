@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 // Determine which env to use
 // by having it overriden at runtime using `cross-env NODE_ENV=...`
@@ -80,6 +81,7 @@ module.exports = {
 	},
 
 	plugins: [
+    new VueLoaderPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': {
 				NODE_ENV: '"' + node_env + '"'
