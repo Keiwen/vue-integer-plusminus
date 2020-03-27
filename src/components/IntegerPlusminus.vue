@@ -8,6 +8,7 @@
              :aria-valuenow="value" :aria-valuemin="min" :aria-valuemax="max" :aria-label="spinButtonAriaLabel">
             <slot>{{ intValue }}</slot>
         </div>
+        <input type="hidden" :name="formName" :value="intValue" />
         <button class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()"
                 :aria-label="incrementAriaLabel" :disabled="disabled">
             <slot :name="vertical ? 'decrement' : 'increment'">{{ vertical ? '-' : '+' }}</slot>
@@ -54,6 +55,10 @@
       disabled: {
         default: false,
         type: Boolean
+      },
+      formName: {
+        default: 'integerPlusMinus',
+        type: String
       }
     },
     data () {
