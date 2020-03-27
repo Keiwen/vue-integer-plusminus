@@ -37,6 +37,7 @@ export default {
                    :step="ipm_step"
                    :vertical="ipm_vertical"
                    :disabled="imp_disabled"
+                   formName="integer_plus_minus"
                    v-model="ipm_value">
     <p>Your value is</p>
     {{ ipm_value }}
@@ -58,6 +59,7 @@ export default {
 | `spinButtonAriaLabel` | `string` | Set aria-label attribute on value element, optional |
 | `incrementAriaLabel` | `string` | Set aria-label attribute on decrement button element, optional |
 | `decrementAriaLabel` | `string` | Set aria-label attribute on increment button element, optional |
+| `formName` | `string` | Set the 'name' attribute of the form input. Default is 'integerPlusMinus' |
 
 This component provide 3 slots
 - Default slot is the middle part when value is usually displayed
