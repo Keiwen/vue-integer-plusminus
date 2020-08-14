@@ -53,7 +53,9 @@ export default {
 | :--- | :--- | ---: |
 | `min` | `number` | minimum possible value. Cannot decrement lower. Default is 0 |
 | `max` | `number` | maximum possible value. Cannot increment over. Default is undefined |
-| `step` | `number` | Incremental step. Must be greater than 0. Default is 1 |
+| `step` | `number` | Incremental and decremental step. Must be greater than 0. Default is 1 |
+| `stepIncrement` | `number` | Incremental step, optional. If greater than 0 (default), this value replaced the 'step' one when incrementing |
+| `stepDecrement` | `number` | Decremental step, optional. If greater than 0 (default), this value replaced the 'step' one when decrementing |
 | `vertical` | `Boolean` | Use vertical layout. Default is false |
 | `disabled` | `Boolean` | Disabled buttons and keys events. Default is false |
 | `spinButtonAriaLabel` | `string` | Set aria-label attribute on value element, optional |

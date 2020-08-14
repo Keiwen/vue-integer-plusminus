@@ -10,11 +10,13 @@
                 <integer-plusminus :min="parseInt(ipm_min)"
                            :max="parseInt(ipm_max)"
                            :step="parseInt(ipm_step)"
+                           :stepIncrement="parseInt(ipm_stepInc)"
+                           :stepDecrement="parseInt(ipm_stepDec)"
                            :vertical="ipm_vertical"
                            :disabled="ipm_disabled"
-                           :increment-aria-label="'increase by 1'"
-                           :decrement-aria-label="'decrease by 1'"
-                           :spin-button-aria-label="'first example'"
+                           :increment-aria-label="'Increment'"
+                           :decrement-aria-label="'Decrement'"
+                           :spin-button-aria-label="'First example'"
                            v-model="ipm_value">
                     <p v-if="ipm_slot_header">{{ ipm_slot_header }}</p>
                     {{ ipm_value }}
@@ -50,6 +52,16 @@
 
                 <br/><br/>
 
+                <i>Or unbalanced steps: </i>
+
+                <label for="ipm_stepInc">Increment step:</label>
+                <input type="number" v-model="ipm_stepInc" id="ipm_stepInc"/>
+
+                <label for="ipm_stepDec">Decrement step:</label>
+                <input type="number" v-model="ipm_stepDec" id="ipm_stepDec"/>
+
+                <br/><br/>
+
                 <label for="ipm_slot_header">Additional text:</label>
                 <input type="text" v-model="ipm_slot_header" id="ipm_slot_header"/>
 
@@ -69,9 +81,11 @@
 
                 <integer-plusminus :min="1" :max="3" :value="2" :increment-aria-label="'increase by 1'" :decrement-aria-label="'decrease by 1'" :spin-button-aria-label="'example two'"></integer-plusminus>
                 <br/>
-                <integer-plusminus :min="0" :max="100" :step="10" :increment-aria-label="'increase score by 10'" :decrement-aria-label="'decrease score by 10'" :spin-button-aria-label="'game points'" v-model="demo_slot_value">
+                <integer-plusminus :min="0" :max="100" :stepIncrement="10" :stepDecrement="5" :increment-aria-label="'increase score by 10'" :decrement-aria-label="'decrease score by 10'" :spin-button-aria-label="'game points'" v-model="demo_slot_value">
                     <p>You have {{ demo_slot_value }} points</p>
-                    <i>Games worth 10 points</i>
+                    <i>10 points for a win</i>
+                    <br/>
+                    <i>-5 points for a loss</i>
                     <template slot="increment">Win</template>
                     <template slot="decrement">Loss</template>
                 </integer-plusminus>
@@ -98,6 +112,8 @@
         ipm_min: 0,
         ipm_max: 9,
         ipm_step: 1,
+        ipm_stepInc: 0,
+        ipm_stepDec: 0,
         ipm_slot_header: 'Your value is',
         ipm_slot_decr: '-1',
         ipm_slot_incr: '+1',
