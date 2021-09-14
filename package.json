@@ -48,7 +48,7 @@
     "sass-loader": "^6.0.6",
     "script-loader": "^0.7.0",
     "serialize-javascript": "^5.0.1",
-    "set-value": "^3.0.2",
+    "set-value": "^4.0.1",
     "style-loader": "^0.13.2",
     "svg-inline-loader": "^0.7.1",
     "unindent": "^2.0.0",
