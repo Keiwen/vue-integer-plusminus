@@ -1,197 +1,135 @@
-<template>
-    <div class="int-pm" :class="{'int-pm-vertical': vertical}">
-        <button class="int-pm-btn" :class="getBtnClass(true)" v-on:click="vertical ? increment() : decrement()"
-                :aria-label="decrementAriaLabel" :disabled="disabled">
-            <slot :name="vertical ? 'increment' : 'decrement'">{{ vertical ? '+' : '-' }}</slot>
-        </button>
-        <div class="int-pm-value" ref="spinbutton" role="spinbutton" tabindex="0"
-             :aria-valuenow="value" :aria-valuemin="min" :aria-valuemax="max" :aria-label="spinButtonAriaLabel">
-            <slot>{{ intValue }}</slot>
-        </div>
-        <button class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()"
-                :aria-label="incrementAriaLabel" :disabled="disabled">
-            <slot :name="vertical ? 'decrement' : 'increment'">{{ vertical ? '-' : '+' }}</slot>
-        </button>
-    </div>
-</template>
+<script setup>
+import { ref, computed, watch, onMounted, defineProps, defineEmits } from 'vue'
 
-<script>
-  export default {
-    name: 'IntegerPlusminus',
-    props: {
-      value: {
-        default: 0,
-        type: Number
-      },
-      min: {
-        default: 0,
-        type: Number
-      },
-      max: {
-        default: undefined,
-        type: Number
-      },
-      step: {
-        default: 1,
-        type: Number
-      },
-      vertical: {
-        default: false,
-        type: Boolean
-      },
-      incrementAriaLabel: {
-        default: null,
-        type: String
-      },
-      decrementAriaLabel: {
-        default: null,
-        type: String
-      },
-      spinButtonAriaLabel: {
-        default: null,
-        type: String
-      },
-      disabled: {
-        default: false,
-        type: Boolean
-      }
-    },
-    data () {
-      return {
-        intValue: 0
-      }
-    },
-    computed: {
-      canIncrement () {
-        if (this.disabled) return false
-        return (this.max === undefined || ((this.intValue + this.step) <= this.max))
-      },
-      canDecrement () {
-        if (this.disabled) return false
-        return ((this.intValue - this.step) >= this.min)
-      },
-    },
-    mounted () {
-      window.addEventListener('keydown', this.keyUp)
-    },
-    methods: {
-      keyUp (event) {
-        if (this.isSpinButtonFocused()) {
-          if (event.keyCode === 33 || event.keyCode === 38) { // page up || up arrow
-            this.increment()
-            event.preventDefault()
-          }
+const props = defineProps({
+  modelValue: Number,
+  initialValue: { type: Number, default: 0 },
+  min: { type: Number, default: 0 },
+  max: { type: Number, default: undefined },
+  step: { type: Number, default: 1 },
+  vertical: { type: Boolean, default: false },
+  incrementAriaLabel: { type: String, default: undefined },
+  decrementAriaLabel: { type: String, default: undefined },
+  spinButtonAriaLabel: { type: String, default: undefined },
+  disabled: { type: Boolean, default: false }
+})
 
-          if (event.keyCode === 34 || event.keyCode === 40) { // page down || down arrow
-            this.decrement()
-            event.preventDefault()
-          }
+const intValue = ref(0)
+const spinButton = ref(null)
 
-          if (event.keyCode === 36) { // home button
-            this.setToMin()
-            event.preventDefault()
-          }
+const emit = defineEmits(['update:modelValue', 'imp-increment', 'imp-decrement'])
 
-          // if max, set to max
-          if (this.max !== undefined && event.keyCode === 35) { // end button
-            this.setToMax()
-            event.preventDefault()
-          }
-        }
-      },
-      isSpinButtonFocused() {
-        return document.activeElement === this.$refs.spinbutton
-      },
-      getBtnClass (firstBtn) {
-        let btnClass = 'int-pm-'
-        if ((firstBtn && !this.vertical) || (!firstBtn && this.vertical)) {
-          btnClass += 'decrement'
-          if (!this.canDecrement) btnClass += ' disabled'
-        } else {
-          btnClass += 'increment'
-          if (!this.canIncrement) btnClass += ' disabled'
-        }
-        return btnClass
-      },
-      setToMin () {
-        if (this.disabled) return
-        this.intValue = this.min
-        this.$emit('input', this.intValue)
-      },
-      setToMax() {
-        if (this.disabled) return
-        this.intValue = this.max
-        this.$emit('input', this.intValue)
-      },
-      increment () {
-        if (this.canIncrement) {
-          this.intValue = this.intValue + this.step
-          this.$emit('ipm-increment', this.intValue)
-          this.$emit('input', this.intValue)
-        }
-      },
-      decrement () {
-        if (this.canDecrement) {
-          this.intValue = this.intValue - this.step
-          this.$emit('ipm-decrement', this.intValue)
-          this.$emit('input', this.intValue)
-        }
-      }
-    },
-    watch: {
-      value: {
-        handler: function (newVal, oldVal) {
-          this.intValue = newVal
-        }
-      }
-    },
-    created () {
-      this.intValue = this.value
-      if (this.step < 1) this.step = 1
-      if (this.max < this.min) this.max = undefined
+// computed
+const canIncrement = computed(() => {
+  if (props.disabled) return false
+  return (props.max === undefined || ((intValue.value + props.step) <= props.max))
+})
+const canDecrement = computed(() => {
+  if (props.disabled) return false
+  return ((intValue.value - props.step) >= props.min)
+})
+
+onMounted(() => {
+  window.addEventListener('keydown', keyUp)
+  if (props.modelValue === undefined) {
+    intValue.value = props.initialValue
+  } else {
+    intValue.value = props.modelValue
+  }
+})
+
+watch(() => props.modelValue, (newValue, oldValue) => {
+  if (newValue !== intValue.value) intValue.value = newValue
+})
+
+// methods
+const inputChange = () => {
+  if (props.modelValue !== undefined) {
+    emit('update:modelValue', intValue.value)
+  }
+}
+const isSpinButtonFocused = () => {
+  return document.activeElement === spinButton.value
+}
+const setToMin = () => {
+  if (props.disabled) return
+  intValue.value = props.min
+  inputChange()
+}
+const setToMax = () => {
+  if (props.disabled) return
+  intValue.value = props.max
+  inputChange()
+}
+const increment = () => {
+  if (canIncrement.value) {
+    intValue.value = intValue.value + props.step
+    emit('imp-increment', intValue.value)
+    inputChange()
+  }
+}
+const decrement = () => {
+  if (canDecrement.value) {
+    intValue.value = intValue.value - props.step
+    emit('imp-decrement', intValue.value)
+    inputChange()
+  }
+}
+const keyUp = (event) => {
+  if (isSpinButtonFocused()) {
+    if (event.keyCode === 33 || event.keyCode === 38) { // page up || up arrow
+      increment()
+      event.preventDefault()
+    }
+
+    if (event.keyCode === 34 || event.keyCode === 40) { // page down || down arrow
+      decrement()
+      event.preventDefault()
+    }
+
+    if (event.keyCode === 36) { // home button
+      setToMin()
+      event.preventDefault()
+    }
+
+    // if max, set to max
+    if (props.max !== undefined && event.keyCode === 35) { // end button
+      setToMax()
+      event.preventDefault()
     }
   }
+}
+const getBtnClass = (isFirstBtn) => {
+  let btnClass = 'int-pm-'
+  if ((isFirstBtn && !props.vertical) || (!isFirstBtn && props.vertical)) {
+    btnClass += 'decrement'
+    if (!canDecrement.value) btnClass += ' disabled'
+  } else {
+    btnClass += 'increment'
+    if (!canIncrement.value) btnClass += ' disabled'
+  }
+  return btnClass
+}
+
 </script>
 
-<style lang="scss" scoped>
-    .int-pm {
-        display: flex;
-        text-align: center;
+<template>
+  <div class="int-pm" :class="{'int-pm-vertical': vertical}">
+    <button class="int-pm-btn" :class="getBtnClass(true)" v-on:click="vertical ? increment() : decrement()"
+            :aria-label="decrementAriaLabel" :disabled="disabled">
+      <slot :name="vertical ? 'increment' : 'decrement'">{{ vertical ? '+' : '-' }}</slot>
+    </button>
+    <div class="int-pm-value" ref="spinButton" role="spinbutton" tabindex="0"
+         :aria-valuenow="intValue" :aria-valuemin="min" :aria-valuemax="max" :aria-label="spinButtonAriaLabel">
+      <slot>{{ intValue }}</slot>
+    </div>
+    <button class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()"
+            :aria-label="incrementAriaLabel" :disabled="disabled">
+      <slot :name="vertical ? 'decrement' : 'increment'">{{ vertical ? '-' : '+' }}</slot>
+    </button>
+  </div>
+</template>
 
-        .int-pm-value {
-            border-width: 1px 0;
-            border-color: #CCC;
-            border-style: solid;
-            padding: 0 10px;
-        }
+<style>
 
-        .int-pm-btn {
-            border: 1px solid #CCC;
-            background-color: #DDD;
-            cursor: pointer;
-            padding: 5px 10px;
-
-            &:hover {
-                background-color: #CCC;
-            }
-
-            &.disabled {
-                background-color: #EEE;
-                color: #777;
-                cursor: not-allowed;
-                &:hover {
-                    background-color: #EEE;
-                }
-            }
-        }
-
-        &.int-pm-vertical {
-            flex-direction: column;
-
-            .int-pm-value {
-                border-width: 0 1px;
-                padding: 5px 10px;
-            }
-        }
-    }
 </style>
