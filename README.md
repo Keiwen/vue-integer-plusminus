@@ -2,63 +2,62 @@
 [![npm](https://img.shields.io/npm/v/vue-integer-plusminus.svg)](https://www.npmjs.com/package/vue-integer-plusminus)
 [![npm](https://img.shields.io/npm/dt/vue-integer-plusminus.svg)](https://www.npmjs.com/package/vue-integer-plusminus)
 
-Integer input with increment and decrement buttons
+Integer input with increment and decrement buttons,
+fitting as spinbutton, allowing keyboard functionalities.
 
 [Live demo here](https://keiwen.github.io/vue-integer-plusminus/)
 
-This component fits as spinbutton, allowing keyboard functionalities (`up`/`down` arrows or `page up/down` to increment/decrement, `home`/`end` to min/max)
-
 ## Global use
-- npm install
+- npm install in console
 ```
 npm install --save vue-integer-plusminus
 ```
-- import components
+- import component in your code
 ```
 import { IntegerPlusminus } from 'vue-integer-plusminus'
 ```
-- declare use or imported components in your vue script
+you may also import it globally in your app
 ```
-export default {
-    components: { IntegerPlusminus },
-    methods: ...
-}
+import { createApp } from "vue";
+import vueIntegerPlusminus from "vue-interger-plusminus";
+createApp(App).use(vueIntegerPlusminus);
 ```
-- Use components as described below
+- Use component as described below
 
-## Components
-### Integer plus/minus
+## Component usage
+### In code
 ```
 <integer-plusminus></integer-plusminus>
 ```
 ```
-<integer-plusminus :min="ipm_min"
-                   :max="ipm_max"
-                   :step="ipm_step"
-                   :vertical="ipm_vertical"
-                   :disabled="imp_disabled"
-                   v-model="ipm_value">
+<integer-plusminus :min="ipmMin"
+                   :max="ipmMax"
+                   :step="ipmStep"
+                   :vertical="ipmVertical"
+                   :disabled="impDisabled"
+                   v-model="ipmValue">
     <p>Your value is</p>
     {{ ipm_value }}
     
-    <template slot="decrement">{{ ipm_slot_decr }}</template>
+    <template v-slot:decrement>{{ ipmSlotDecr }}</template>
     
-    <template slot="increment">{{ ipm_slot_incr }}</template>
+    <template v-slot:increment>{{ ipmSlotIncr }}</template>
 </integer-plusminus>
 ```
 
+| Prop                     | Type      |                                                                                Note |
+|:-------------------------|:----------|------------------------------------------------------------------------------------:|
+| `min`                    | `number`  |                        minimum possible value. Cannot decrement lower. Default is 0 |
+| `max`                    | `number`  |                 maximum possible value. Cannot increment over. Default is undefined |
+| `step`                   | `number`  |                              Incremental step. Must be greater than 0. Default is 1 |
+| `vertical`               | `Boolean` |                                               Use vertical layout. Default is false |
+| `disabled`               | `Boolean` |                                  Disabled buttons and keys events. Default is false |
+| `spin-button-aria-label` | `string`  |                                 Set aria-label attribute on value element, optional |
+| `increment-aria-label`   | `string`  |                      Set aria-label attribute on decrement button element, optional |
+| `decrement-aria-label`   | `string`  |                      Set aria-label attribute on increment button element, optional |
+| `initial-value`          | `number`  | When v-model is not used, use this attribute to initialized integer value, optional |
 
-| Prop | Type | Note
-| :--- | :--- | ---: |
-| `min` | `number` | minimum possible value. Cannot decrement lower. Default is 0 |
-| `max` | `number` | maximum possible value. Cannot increment over. Default is undefined |
-| `step` | `number` | Incremental step. Must be greater than 0. Default is 1 |
-| `vertical` | `Boolean` | Use vertical layout. Default is false |
-| `disabled` | `Boolean` | Disabled buttons and keys events. Default is false |
-| `spinButtonAriaLabel` | `string` | Set aria-label attribute on value element, optional |
-| `incrementAriaLabel` | `string` | Set aria-label attribute on decrement button element, optional |
-| `decrementAriaLabel` | `string` | Set aria-label attribute on increment button element, optional |
-
+### Slots
 This component provide 3 slots
 - Default slot is the middle part when value is usually displayed
 - 'increment' slot is used for increment button.
@@ -68,21 +67,39 @@ or top for vertical layout.
 Usually on left for horizontal layout,
 or bottom for vertical layout.
 
-Style could be overwritten using `!important` css keyword
+### Spinbutton
+Spinbutton pattern (from WAI-ARIA specifications) is implemented on the middle part,
+where value is usually displayed.
+By focusing it (click on it), you can use keyboard to:
+- increment (arrow up or page up keys),
+- decrement (arrow down or page down keys),
+- set min (home key)
+- set max (end key, only if max defined).
+
+Thanks to [codekipple](https://github.com/codekipple) for this.
+
+### Style
+You can override base CSS variable used, like colors.
+After importing this library style, override CSS variable in root.
+For example, the following CSS will set spinbutton part's background to fuchsia.
 ```
-.int-input-increment {
-    background: #5CB85C !important;
+:root {
+  --ipm-background-color: fuchsia;
 }
 ```
+Refer to `src/styles/variables.css` for the full list of variable used
+in this library that you can override.
 
-Events:
-- 'input' on value change
-- 'ipm-increment' on value increment
-- 'ipm-decrement' on value decrement
+You can also override style regrouped under `.int-pm` class.
+
+### Events
+- 'ipm-increment' is triggered on value increment
+- 'ipm-decrement' is triggered on value decrement
 
 ## Contribution
+This library is managed with vue-CLI
 - Fork the repository
 - Run `npm install`
-- You can run `npm run dev`, site is at http://localhost:8081.
+- You can run `npm run serve`, the script will start the mini demo application
 - Do your stuff
 - When you're done, run `npm run build` command and commit your work for a pull request.

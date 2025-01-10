@@ -1,23 +1,25 @@
 {
   "name": "vue-integer-plusminus",
-  "version": "1.3.0",
-  "description": "Integer input with increment and decrement buttons for vue 2",
+  "version": "3.0.0",
+  "description": "Integer input with increment and decrement buttons for vue 3",
   "author": "Keiwen <keiwen.mk@gmail.com>",
   "private": false,
   "scripts": {
-    "dev": "webpack-dev-server --config docs/webpack.config.js --inline --hot",
-    "build": "npm run build-src && npm run build-docs",
-    "build-src": "webpack --config src/webpack.config.js --progress --hide-modules",
-    "build-docs": "webpack --config docs/webpack.config.js --progress --hide-modules"
+    "serve": "vue-cli-service serve ./demo/main.js",
+    "build:lib": "vue-cli-service build --target lib ./src/index.js",
+    "build:docs": "vue-cli-service build ./demo/main.js --mode docs",
+    "build": "npm run build:lib && npm run build:docs",
+    "lint": "vue-cli-service lint"
   },
-  "main": "dist/vue-integer-plusminus.js",
-  "module": "src/main.js",
+  "main": "dist/vue-integer-plusminus.common.js",
+  "module": "dist/vue-integer-plusminus.umd.js",
+  "browser": "dist/vue-integer-plusminus.umd.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Keiwen/vue-integer-plusminus.git"
   },
   "dependencies": {
-    "vue": "^2.1.10"
+    "vue": "3.x"
   },
   "keywords": [
     "vue",
@@ -26,27 +28,39 @@
     "input"
   ],
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-minify-webpack-plugin": "^0.2.0",
-    "babel-preset-env": "^1.6.1",
-    "cross-env": "^1.0.6",
-    "css-loader": "^0.14.5",
-    "file-loader": "^0.8.4",
-    "imports-loader": "^0.6.5",
-    "node-sass": "^4.5.3",
-    "sass-loader": "^6.0.6",
-    "script-loader": "^0.7.0",
-    "style-loader": "^0.13.2",
-    "svg-inline-loader": "^0.7.1",
-    "unindent": "^2.0.0",
-    "vue": "^2.4.4",
-    "vue-highlightjs": "^1.1.0",
-    "vue-loader": "^13.0.5",
-    "vue-style-loader": "^1.0.0",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.3",
-    "webpack-merge": "^4.1.0"
-  }
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/eslint-config-standard": "^6.1.0",
+    "core-js": "^3.8.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "eslint-plugin-vue": "^7.0.0",
+    "sass": "^1.83.1",
+    "sass-loader": "^16.0.4"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "@vue/standard"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
 }
