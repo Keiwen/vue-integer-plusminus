@@ -35,6 +35,7 @@ createApp(App).use(vueIntegerPlusminus);
                    :step="ipmStep"
                    :vertical="ipmVertical"
                    :disabled="impDisabled"
+                   form-name="integer_plus_minus"
                    v-model="ipmValue">
     <p>Your value is</p>
     {{ ipm_value }}
@@ -55,6 +56,7 @@ createApp(App).use(vueIntegerPlusminus);
 | `spin-button-aria-label` | `string`  |                                 Set aria-label attribute on value element, optional |
 | `increment-aria-label`   | `string`  |                      Set aria-label attribute on decrement button element, optional |
 | `decrement-aria-label`   | `string`  |                      Set aria-label attribute on increment button element, optional |
+| `form-name`              | `string`  | Set the 'name' attribute of the form input. Default is 'integerPlusMinus', optional |
 | `initial-value`          | `number`  | When v-model is not used, use this attribute to initialized integer value, optional |
 
 ### Slots

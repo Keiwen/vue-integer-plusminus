@@ -11,6 +11,7 @@ const props = defineProps({
   incrementAriaLabel: { type: String, default: undefined },
   decrementAriaLabel: { type: String, default: undefined },
   spinButtonAriaLabel: { type: String, default: undefined },
+  formName: { type: String, default: 'integerPlusMinus' },
   disabled: { type: Boolean, default: false }
 })
 
@@ -123,6 +124,7 @@ const getBtnClass = (isFirstBtn) => {
          :aria-valuenow="intValue" :aria-valuemin="min" :aria-valuemax="max" :aria-label="spinButtonAriaLabel">
       <slot>{{ intValue }}</slot>
     </div>
+    <input type="hidden" :name="formName" :value="intValue" />
     <button class="int-pm-btn" :class="getBtnClass(false)" v-on:click="vertical ? decrement() : increment()"
             :aria-label="incrementAriaLabel" :disabled="disabled">
       <slot :name="vertical ? 'decrement' : 'increment'">{{ vertical ? '-' : '+' }}</slot>
