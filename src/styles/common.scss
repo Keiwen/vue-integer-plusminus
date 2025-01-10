@@ -1,0 +1,44 @@
+@use './variables';
+
+.int-pm {
+  display: flex;
+  text-align: center;
+
+  .int-pm-value {
+    border-width: 1px 0;
+    border-color: var(--ipm-border-color);
+    border-style: solid;
+    padding: 0 10px;
+    background-color: var(--ipm-background-color);
+  }
+
+  .int-pm-btn {
+    border: 1px solid var(--ipm-border-color);
+    background-color: var(--ipm-btn-background-color);
+    cursor: pointer;
+    padding: 5px 10px;
+    color: var(--ipm-btn-color);
+
+    &:hover {
+      background-color: var(--ipm-btn-background-color-hover);
+    }
+
+    &.disabled {
+      background-color: var(--ipm-btn-background-color-disabled);
+      color: var(--ipm-btn-background-disabled);
+      cursor: not-allowed;
+      &:hover {
+        background-color: var(--ipm-btn-background-color-disabled);
+      }
+    }
+  }
+
+  &.int-pm-vertical {
+    flex-direction: column;
+
+    .int-pm-value {
+      border-width: 0 1px;
+      padding: 5px 10px;
+    }
+  }
+}

@@ -1,0 +1,9 @@
+:root {
+  --ipm-border-color: #CCCCCC;
+  --ipm-background-color: transparent;
+  --ipm-btn-color: inherit;
+  --ipm-btn-background-color: #DDDDDD;
+  --ipm-btn-background-color-hover: #CCCCCC;
+  --ipm-btn-background-color-disabled: #EEEEEE;
+  --ipm-btn-color-disabled: #777777;
+}
