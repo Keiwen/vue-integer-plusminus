@@ -18,7 +18,7 @@ const props = defineProps({
 const intValue = ref(0)
 const spinButton = ref(null)
 
-const emit = defineEmits(['update:modelValue', 'imp-increment', 'imp-decrement'])
+const emit = defineEmits(['update:modelValue', 'ipm-input', 'ipm-increment', 'ipm-decrement'])
 
 // computed
 const canIncrement = computed(() => {
@@ -47,6 +47,7 @@ watch(() => props.modelValue, (newValue, oldValue) => {
 const inputChange = () => {
   if (props.modelValue !== undefined) {
     emit('update:modelValue', intValue.value)
+    emit('ipm-input', intValue.value)
   }
 }
 const isSpinButtonFocused = () => {
@@ -65,14 +66,14 @@ const setToMax = () => {
 const increment = () => {
   if (canIncrement.value) {
     intValue.value = intValue.value + props.step
-    emit('imp-increment', intValue.value)
+    emit('ipm-increment', intValue.value)
     inputChange()
   }
 }
 const decrement = () => {
   if (canDecrement.value) {
     intValue.value = intValue.value - props.step
-    emit('imp-decrement', intValue.value)
+    emit('ipm-decrement', intValue.value)
     inputChange()
   }
 }

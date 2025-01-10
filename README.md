@@ -95,6 +95,7 @@ in this library that you can override.
 You can also override style regrouped under `.int-pm` class.
 
 ### Events
+- 'ipm-input' is triggered on value change
 - 'ipm-increment' is triggered on value increment
 - 'ipm-decrement' is triggered on value decrement
 
