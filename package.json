@@ -1,6 +1,6 @@
 {
   "name": "vue-integer-plusminus",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Integer input with increment and decrement buttons for vue 3",
   "author": "Keiwen <keiwen.mk@gmail.com>",
   "private": false,
@@ -26,6 +26,9 @@
     "integer",
     "increment",
     "input"
+  ],
+  "files": [
+    "dist"
   ],
   "devDependencies": {
     "@babel/core": "^7.12.16",
