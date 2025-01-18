@@ -1,9 +1,16 @@
 # vue-integer-plusminus
-[![npm](https://img.shields.io/npm/v/vue-integer-plusminus.svg)](https://www.npmjs.com/package/vue-integer-plusminus)
-[![npm](https://img.shields.io/npm/dt/vue-integer-plusminus.svg)](https://www.npmjs.com/package/vue-integer-plusminus)
+[![npm version](https://img.shields.io/npm/v/vue-integer-plusminus?logo=npm)](https://www.npmjs.com/package/vue-integer-plusminus)
+[![npm downloads](https://img.shields.io/npm/dt/vue-integer-plusminus?logo=npm&color=CB3837)](https://www.npmjs.com/package/vue-integer-plusminus)
+[![npm downloads](https://img.shields.io/npm/unpacked-size/vue-integer-plusminus?logo=npm&color=CB3837)](https://www.npmjs.com/package/vue-integer-plusminus)
 
-Integer input with increment and decrement buttons,
+![vue version](https://img.shields.io/badge/vue.js-3.x-4FC08D?logo=vue.js)
+![main language](https://img.shields.io/badge/language-Javascript-yellow)
+![github stars](https://img.shields.io/github/stars/keiwen/vue-integer-plusminus)
+
+
+Integer input component for vue3 with increment and decrement buttons,
 fitting as spinbutton, allowing keyboard functionalities.
+See versions 1.x for vue2 component
 
 [Live demo here](https://keiwen.github.io/vue-integer-plusminus/)
 
